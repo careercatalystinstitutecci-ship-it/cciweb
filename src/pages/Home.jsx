@@ -181,20 +181,32 @@ const Home = () => {
     <div>
       {/* Hero Section */}
       <Hero
-        title="Launch Your Career in Software Testing & Quality Assurance"
-        subtitle="Master Manual Testing, Automation Testing, API Testing, Database Testing, Selenium, and Playwright through practical training and real-world projects."
-        image="🚀"
-        buttons={[
-          { label: 'Enroll Now', href: '/contact', type: 'primary' },
-          { label: 'Book Free Demo', href: '#contact-form', type: 'secondary' },
-          {
-            stats: [
-              { value: '500+', label: 'Students Trained' },
-              { value: '8+', label: 'Industry Experts' },
-              { value: '95%', label: 'Success Rate' }
-            ]
-          }
+        poweredBy="GenAI Powered"
+        title="Software Testing"
+        subtitle="Training With Job Placement"
+        image={{
+          description: 'Join The Best IT Training Institute Of India And Become Job-Ready IT Professionals.'
+        }}
+        features={[
+          { icon: '💎', label: '10+ Years of Excellence' },
+          { icon: '🎯', label: '100% Placement Support' },
+          { icon: '👥', label: '5000+ Students Placed' },
+          { icon: '👨‍💼', label: 'MNC Trainers' }
         ]}
+        cta1={{
+          icon: '💬',
+          label: 'Ask for Demo Session',
+          href: 'https://wa.me/919511284775'
+        }}
+        cta2={{
+          icon: '☎️',
+          label: 'Reserve Your Seat',
+          href: '/contact'
+        }}
+        imageType="image"
+        imageSrc="https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&h=600&fit=crop"
+        videoOverlay={false}
+      
       />
 
       {/* Trust Section */}
