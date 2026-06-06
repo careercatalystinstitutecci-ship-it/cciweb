@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 import Hero from '../components/Hero'
 import FeatureCard from '../components/FeatureCard'
 import CourseCard from '../components/CourseCard'
@@ -25,6 +30,59 @@ import {
 } from 'react-icons/fi'
 
 const Home = () => {
+  // Add CSS for curriculum carousel
+  useEffect(() => {
+    const style = document.createElement('style')
+    style.innerHTML = `
+      .curriculum-swiper-slide {
+        height: auto !important;
+        display: flex !important;
+        align-items: stretch !important;
+        padding-bottom: 50px !important;
+      }
+      .curriculum-swiper-slide > div {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .curriculum-swiper-slide ul.space-y-2 {
+        display: block !important;
+        margin-top: 16px !important;
+      }
+      .curriculum-swiper-slide > div > div > ul {
+        display: block !important;
+      }
+      .swiper-button-prev-curriculum,
+      .swiper-button-next-curriculum {
+        position: absolute !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        z-index: 10 !important;
+        width: 40px !important;
+        height: 40px !important;
+        background-color: #6366f1 !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: white !important;
+        cursor: pointer !important;
+        font-size: 18px !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+        padding: 0 !important;
+      }
+      .swiper-button-prev-curriculum {
+        left: -60px !important;
+      }
+      .swiper-button-next-curriculum {
+        right: -60px !important;
+      }
+    `
+    document.head.appendChild(style)
+    return () => document.head.removeChild(style)
+  }, [])
+
   const features = [
     {
       icon: FiBookOpen,
@@ -234,11 +292,11 @@ const Home = () => {
       {/* Popular Courses Carousel (inserted after Why Learning With Us Matters) */}
       <PopularCourses
         courses={[
-          { title: 'Software Testing', duration: '8-12 weeks', modules: 9, icon: '💻', price: '₹3.5L–8.0L', features: ['Manual Testing', 'Automation Basics', 'Live Projects'] },
-          { title: 'Automation Testing', duration: '10-14 weeks', modules: 10, icon: '🤖', price: '₹4.0L–10.0L', features: ['Selenium', 'Frameworks', 'CI/CD'] },
-          { title: 'Playwright Automation', duration: '8-12 weeks', modules: 8, icon: '🎭', price: '₹4.5L–10.0L', features: ['Playwright', 'E2E Testing', 'Projects'] },
-          { title: 'Performance Testing', duration: '6-10 weeks', modules: 6, icon: '⚡', price: '₹4.0L–9.0L', features: ['Load Testing', 'JMeter', 'Analysis'] },
-          { title: 'API Testing & Automation', duration: '6-8 weeks', modules: 5, icon: '🔌', price: '₹3.5L–7.5L', features: ['Postman', 'RestAssured', 'API Automation'] }
+          { title: 'Software Testing', duration: '8-12 weeks', modules: 9, icon: '💻', price: '₹3.5L–8.0L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] },
+          { title: 'Automation Testing', duration: '10-14 weeks', modules: 10, icon: '🤖', price: '₹4.0L–10.0L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] },
+          { title: 'Playwright Automation', duration: '8-12 weeks', modules: 8, icon: '🎭', price: '₹4.5L–10.0L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] },
+          { title: 'Performance Testing', duration: '6-10 weeks', modules: 6, icon: '⚡', price: '₹4.0L–9.0L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] },
+          { title: 'API Testing & Automation', duration: '6-8 weeks', modules: 5, icon: '🔌', price: '₹3.5L–7.5L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] }
         ]}
       />
 
@@ -272,33 +330,68 @@ const Home = () => {
             subtitle="Comprehensive curriculum covering all aspects of modern testing"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {[
-              { number: 1, title: 'Testing Fundamentals', icon: '📖' },
-              { number: 2, title: 'Manual Testing', icon: '✋' },
-              { number: 3, title: 'Agile Testing', icon: '🔄' },
-              { number: 4, title: 'JIRA Mastery', icon: '🔧' },
-              { number: 5, title: 'Database Testing', icon: '💾' },
-              { number: 6, title: 'API Testing', icon: '📮' },
-              { number: 7, title: 'Selenium Automation', icon: '🤖' },
-              { number: 8, title: 'Playwright Framework', icon: '🎭' },
-              { number: 9, title: 'Real-Time Project', icon: '💼' }
-            ].map((module, index) => (
-              <CourseCard
-                key={index}
-                title={module.title}
-                icon={module.icon}
-                modules={index + 1}
-                duration={`${2 + index} weeks`}
-                features={[
-                  'Live Training Sessions',
-                  'Practical Assignments',
-                  'Real Projects',
-                  'Expert Support'
-                ]}
-                delay={index * 0.1}
-              />
-            ))}
+          <div className="relative px-16 md:px-20">
+            <div className="swiper-container-wrapper relative">
+              <Swiper
+                modules={[Navigation, Pagination, Autoplay]}
+                spaceBetween={30}
+                slidesPerView={1}
+                loop={true}
+                navigation={{
+                  nextEl: '.swiper-button-next-curriculum',
+                  prevEl: '.swiper-button-prev-curriculum'
+                }}
+                pagination={{ 
+                  clickable: false,
+                  el: '.swiper-pagination-curriculum'
+                }}
+                autoplay={{ delay: 4000, disableOnInteraction: false }}
+                breakpoints={{
+                  640: { slidesPerView: 1 },
+                  768: { slidesPerView: 2 },
+                  1024: { slidesPerView: 3 },
+                  1280: { slidesPerView: 4 }
+                }}
+              >
+                {[
+                  { number: 1, title: 'Testing Fundamentals', icon: '📖' },
+                  { number: 2, title: 'Manual Testing', icon: '✋' },
+                  { number: 3, title: 'Agile Testing', icon: '🔄' },
+                  { number: 4, title: 'JIRA Mastery', icon: '🔧' },
+                  { number: 5, title: 'Database Testing', icon: '💾' },
+                  { number: 6, title: 'API Testing', icon: '📮' },
+                  { number: 7, title: 'Selenium Automation', icon: '🤖' },
+                  { number: 8, title: 'Playwright Framework', icon: '🎭' },
+                  { number: 9, title: 'Real-Time Project', icon: '💼' }
+                ].map((module, index) => (
+                  <SwiperSlide key={index} className="curriculum-swiper-slide flex">
+                    <div className="w-full flex flex-col">
+                      <CourseCard
+                        title={module.title}
+                        icon={module.icon}
+                        modules={index + 1}
+                        duration={`${2 + index} weeks`}
+                        features={[
+                          'Live Training Sessions',
+                          'Practical Assignments',
+                          'Real Projects',
+                          'Expert Support'
+                        ]}
+                        delay={index * 0.05}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            
+            {/* Custom Navigation Arrows */}
+            <button className="swiper-button-prev-curriculum">
+              ❮
+            </button>
+            <button className="swiper-button-next-curriculum">
+              ❯
+            </button>
           </div>
 
           <motion.div

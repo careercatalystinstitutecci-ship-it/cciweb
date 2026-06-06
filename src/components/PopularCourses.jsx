@@ -8,24 +8,56 @@ import CourseCard from './CourseCard'
 
 const PopularCourses = ({ courses = [] }) => {
   React.useEffect(() => {
-    // Add styles for custom pagination
+    // Add styles for alignment and button positioning
     const style = document.createElement('style')
     style.innerHTML = `
-      .swiper-pagination-custom {
-        position: static !important;
-        margin-top: 3rem;
+      .popular-courses-swiper .swiper-pagination-custom {
+        display: none !important;
       }
-      .swiper-pagination-custom .swiper-pagination-bullet {
-        width: 12px;
-        height: 12px;
-        background-color: #d1d5db;
-        opacity: 1;
-        border-radius: 50%;
-        transition: all 0.3s ease;
+      .popular-courses-swiper .swiper-container-wrapper {
+        position: relative;
       }
-      .swiper-pagination-custom .swiper-pagination-bullet-active {
-        background-color: #6366f1;
-        transform: scale(1.2);
+      .popular-courses-swiper .swiper-slide {
+        height: auto !important;
+        display: flex !important;
+        align-items: stretch !important;
+      }
+      .popular-courses-swiper .swiper-slide > div {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .popular-courses-swiper ul {
+        display: block !important;
+      }
+      .popular-courses-swiper li {
+        display: list-item !important;
+      }
+      .popular-courses-swiper .swiper-button-prev-custom,
+      .popular-courses-swiper .swiper-button-next-custom {
+        position: absolute !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        z-index: 10 !important;
+        width: 40px !important;
+        height: 40px !important;
+        background-color: #6366f1 !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: white !important;
+        cursor: pointer !important;
+        font-size: 18px !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+        padding: 0 !important;
+      }
+      .popular-courses-swiper .swiper-button-prev-custom {
+        left: -60px !important;
+      }
+      .popular-courses-swiper .swiper-button-next-custom {
+        right: -60px !important;
       }
     `
     document.head.appendChild(style)
@@ -33,7 +65,7 @@ const PopularCourses = ({ courses = [] }) => {
   }, [])
 
   return (
-    <section className="py-12 md:py-16 bg-white dark:bg-gray-900">
+    <section className="py-12 md:py-16 bg-white dark:bg-gray-900 popular-courses-swiper">
       <div className="container-custom">
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -43,7 +75,8 @@ const PopularCourses = ({ courses = [] }) => {
         </div>
 
         <div className="relative px-16 md:px-20">
-          <Swiper
+          <div className="swiper-container-wrapper relative">
+            <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={30}
             slidesPerView={1}
@@ -53,7 +86,7 @@ const PopularCourses = ({ courses = [] }) => {
               prevEl: '.swiper-button-prev-custom'
             }}
             pagination={{ 
-              clickable: true,
+              clickable: false,
               el: '.swiper-pagination-custom'
             }}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
@@ -65,8 +98,8 @@ const PopularCourses = ({ courses = [] }) => {
             }}
           >
             {courses.map((course, idx) => (
-              <SwiperSlide key={idx}>
-                <div className="h-full">
+              <SwiperSlide key={idx} className="flex">
+                <div className="w-full flex flex-col">
                   <CourseCard
                     title={course.title}
                     icon={course.icon}
@@ -80,17 +113,15 @@ const PopularCourses = ({ courses = [] }) => {
               </SwiperSlide>
             ))}
           </Swiper>
+          </div>
           
-          {/* Custom Navigation Arrows - Outside */}
-          <button className="swiper-button-prev-custom absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-primary hover:bg-accent text-white rounded-full flex items-center justify-center transition-all">
+          {/* Custom Navigation Arrows - Centered */}
+          <button className="swiper-button-prev-custom">
             ❮
           </button>
-          <button className="swiper-button-next-custom absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-primary hover:bg-accent text-white rounded-full flex items-center justify-center transition-all">
+          <button className="swiper-button-next-custom">
             ❯
           </button>
-          
-          {/* Custom Pagination - Below with spacing */}
-          <div className="swiper-pagination-custom flex justify-center gap-2 mt-12"></div>
         </div>
       </div>
     </section>
