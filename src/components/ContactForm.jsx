@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { FiAlertCircle } from 'react-icons/fi'
 
 const ContactForm = ({ onSubmit = null }) => {
+  const apiUrl = import.meta.env.VITE_API_URL || ''
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,14 +30,12 @@ const ContactForm = ({ onSubmit = null }) => {
     setError('')
 
     try {
-      // Validate form
       if (!formData.name || !formData.email || !formData.phone || !formData.message) {
         setError('Please fill in all required fields')
         setLoading(false)
         return
       }
 
-      // Email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(formData.email)) {
         setError('Please enter a valid email address')
@@ -44,7 +43,6 @@ const ContactForm = ({ onSubmit = null }) => {
         return
       }
 
-      // Phone validation
       const phoneRegex = /^[0-9]{10}$/
       if (!phoneRegex.test(formData.phone.replace(/\D/g, ''))) {
         setError('Please enter a valid 10-digit phone number')
@@ -52,12 +50,21 @@ const ContactForm = ({ onSubmit = null }) => {
         return
       }
 
-      // Call onSubmit callback if provided
       if (onSubmit) {
         await onSubmit(formData)
       } else {
-        // Simulate form submission
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        const response = await fetch(`${apiUrl}/api/contact`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+
+        if (!response.ok) {
+          const errorBody = await response.json().catch(() => null)
+          throw new Error(errorBody?.detail || 'Could not send your message. Please try again.')
+        }
       }
 
       setSuccess(true)
@@ -78,18 +85,16 @@ const ContactForm = ({ onSubmit = null }) => {
       transition={{ duration: 0.5 }}
       className="space-y-6"
     >
-      {/* Success Message */}
       {success && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg text-sm"
         >
-          ✓ Thank you! We'll get back to you soon.
+          Thank you! We'll get back to you soon.
         </motion.div>
       )}
 
-      {/* Error Message */}
       {error && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -101,7 +106,6 @@ const ContactForm = ({ onSubmit = null }) => {
         </motion.div>
       )}
 
-      {/* Name and Email Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-semibold text-dark dark:text-white mb-2">
@@ -131,7 +135,6 @@ const ContactForm = ({ onSubmit = null }) => {
         </div>
       </div>
 
-      {/* Phone and Subject Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-semibold text-dark dark:text-white mb-2">
@@ -161,7 +164,6 @@ const ContactForm = ({ onSubmit = null }) => {
         </div>
       </div>
 
-      {/* Message */}
       <div>
         <label className="block text-sm font-semibold text-dark dark:text-white mb-2">
           Message *
@@ -176,7 +178,6 @@ const ContactForm = ({ onSubmit = null }) => {
         ></textarea>
       </div>
 
-      {/* Submit Button */}
       <motion.button
         type="submit"
         disabled={loading}
@@ -191,7 +192,6 @@ const ContactForm = ({ onSubmit = null }) => {
         {loading ? 'Sending...' : 'Send Message'}
       </motion.button>
 
-      {/* Privacy Notice */}
       <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 text-center">
         We respect your privacy. Your information will be kept confidential.
       </p>

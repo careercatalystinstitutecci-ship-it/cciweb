@@ -13,6 +13,7 @@ import Blog from './pages/Blog'
 import FAQ from './pages/FAQ'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsConditions from './pages/TermsConditions'
+import Admin from './pages/Admin'
 
 function AppContent() {
   useScrollToTop()
@@ -31,6 +32,7 @@ function AppContent() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer />
     </>

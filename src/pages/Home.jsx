@@ -18,6 +18,7 @@ import CTASection from '../components/CTASection'
 import ToolCard from '../components/ToolCard'
 import CareerCard from '../components/CareerCard'
 import StatsCounter from '../components/StatsCounter'
+import useSiteContent from '../hooks/useSiteContent'
 import {
   FiBookOpen,
   FiUsers,
@@ -30,6 +31,13 @@ import {
 } from 'react-icons/fi'
 
 const Home = () => {
+  const { content } = useSiteContent()
+  const settings = content.settings
+  const adminServices = content.services.map((service, index) => ({
+    icon: [FiBookOpen, FiTarget, FiUsers, FiAward, FiCheckCircle, FiBriefcase][index % 6],
+    title: service.title,
+    description: service.description
+  }))
   // Add CSS for curriculum carousel
   useEffect(() => {
     const style = document.createElement('style')
@@ -240,10 +248,10 @@ const Home = () => {
       {/* Hero Section */}
       <Hero
         poweredBy="GenAI Powered"
-        title="Software Testing"
-        subtitle="Training With Job Placement"
+        title={settings.heroTitle}
+        subtitle={settings.heroSubtitle}
         image={{
-          description: 'Join The Best IT Training Institute Of India And Become Job-Ready IT Professionals.'
+          description: settings.heroDescription
         }}
         features={[
           { icon: '💎', label: '10+ Years of Excellence' },
@@ -276,7 +284,7 @@ const Home = () => {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {features.map((feature, index) => (
+            {(adminServices.length ? adminServices : features).map((feature, index) => (
               <FeatureCard
                 key={index}
                 icon={feature.icon}
@@ -291,13 +299,7 @@ const Home = () => {
 
       {/* Popular Courses Carousel (inserted after Why Learning With Us Matters) */}
       <PopularCourses
-        courses={[
-          { title: 'Software Testing', duration: '8-12 weeks', modules: 9, icon: '💻', price: '₹3.5L–8.0L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] },
-          { title: 'Automation Testing', duration: '10-14 weeks', modules: 10, icon: '🤖', price: '₹4.0L–10.0L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] },
-          { title: 'Playwright Automation', duration: '8-12 weeks', modules: 8, icon: '🎭', price: '₹4.5L–10.0L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] },
-          { title: 'Performance Testing', duration: '6-10 weeks', modules: 6, icon: '⚡', price: '₹4.0L–9.0L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] },
-          { title: 'API Testing & Automation', duration: '6-8 weeks', modules: 5, icon: '🔌', price: '₹3.5L–7.5L', features: ['Live Training Sessions', 'Practical Assignments', 'Real Projects', 'Expert Support'] }
-        ]}
+        courses={content.courses}
       />
 
       {/* Why Choose Section */}
@@ -564,8 +566,8 @@ const Home = () => {
                   <span className="text-2xl mt-1">📧</span>
                   <div>
                     <p className="font-semibold text-dark dark:text-white">Email</p>
-                    <a href="mailto:career.catalyst.institute.cci@gmail.com" className="text-primary hover:underline">
-                      career.catalyst.institute.cci@gmail.com
+                    <a href={`mailto:${settings.email}`} className="text-primary hover:underline">
+                      {settings.email}
                     </a>
                   </div>
                 </div>
@@ -573,8 +575,8 @@ const Home = () => {
                   <span className="text-2xl mt-1">📞</span>
                   <div>
                     <p className="font-semibold text-dark dark:text-white">Phone</p>
-                    <a href="tel:+918888888888" className="text-primary hover:underline">
-                      +91-8888-888-888
+                    <a href={`tel:${settings.phone.replace(/\D/g, '')}`} className="text-primary hover:underline">
+                      {settings.phone}
                     </a>
                   </div>
                 </div>

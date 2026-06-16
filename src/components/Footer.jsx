@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom'
 import { FiMail, FiPhone, FiMapPin } from 'react-icons/fi'
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import useSiteContent from '../hooks/useSiteContent'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const { content } = useSiteContent()
+  const settings = content.settings
 
   const footerSections = [
     {
@@ -47,9 +50,9 @@ const Footer = () => {
   ]
 
   const contactInfo = [
-    { icon: FiMail, text: 'career.catalyst.institute.cci@gmail.com', href: 'mailto:career.catalyst.institute.cci@gmail.com' },
-    { icon: FiPhone, text: '+91-8888-888-888', href: 'tel:+918888888888' },
-    { icon: FiMapPin, text: 'Nashik, Maharashtra, India', href: '#' }
+    { icon: FiMail, text: settings.email, href: `mailto:${settings.email}` },
+    { icon: FiPhone, text: settings.phone, href: `tel:${settings.phone.replace(/\D/g, '')}` },
+    { icon: FiMapPin, text: settings.location, href: '#' }
   ]
 
   const socialLinks = [
@@ -89,7 +92,7 @@ const Footer = () => {
               <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center font-bold text-lg">
                 CCI
               </div>
-              <h3 className="text-xl font-bold">Career Catalyst</h3>
+              <h3 className="text-xl font-bold">{settings.brandName}</h3>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed mb-4">
               Empowering professionals with world-class Software Testing and Quality Assurance training.
@@ -157,7 +160,7 @@ const Footer = () => {
           className="flex flex-col md:flex-row justify-between items-center gap-4"
         >
           <motion.p variants={itemVariants} className="text-gray-400 text-sm text-center md:text-left">
-            &copy; {currentYear} Career Catalyst Institute. All rights reserved.
+            &copy; {currentYear} {settings.instituteName}. All rights reserved.
           </motion.p>
           
           <motion.div

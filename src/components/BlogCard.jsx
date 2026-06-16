@@ -1,8 +1,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { FiArrowRight } from 'react-icons/fi'
+import { FiArrowRight, FiFileText } from 'react-icons/fi'
 
-const BlogCard = ({ title, excerpt, date, category, image = '📝', delay = 0, href = '#' }) => {
+const BlogCard = ({ title, excerpt, date, category, image = 'AR', imageUrl, delay = 0, href = '#' }) => {
   return (
     <motion.a
       href={href}
@@ -10,44 +10,46 @@ const BlogCard = ({ title, excerpt, date, category, image = '📝', delay = 0, h
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5 }}
       whileHover={{ y: -5 }}
-      className="block group rounded-2xl overflow-hidden bg-white dark:bg-gray-800 shadow-lg hover:shadow-2xl transition-all"
+      className="block overflow-hidden rounded-2xl bg-white shadow-lg transition-all hover:shadow-2xl dark:bg-gray-800 group"
     >
-      {/* Image */}
-      <div className="h-48 md:h-56 bg-gradient-to-br from-primary to-accent flex items-center justify-center text-6xl md:text-7xl overflow-hidden">
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {image}
-        </motion.div>
+      <div className="flex h-48 items-center justify-center overflow-hidden bg-gradient-to-br from-primary to-accent text-5xl md:h-56 md:text-6xl">
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={title}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+        ) : (
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.3 }}
+            className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/15 font-black text-white"
+          >
+            {image || <FiFileText />}
+          </motion.div>
+        )}
       </div>
 
-      {/* Content */}
       <div className="p-6 md:p-8">
-        {/* Category and Date */}
-        <div className="flex items-center justify-between gap-4 mb-3">
-          <span className="inline-block px-3 py-1 bg-accent/20 text-accent rounded-full text-xs font-semibold">
+        <div className="mb-3 flex items-center justify-between gap-4">
+          <span className="inline-block rounded-full bg-accent/20 px-3 py-1 text-xs font-semibold text-accent">
             {category}
           </span>
-          <span className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
-            {date}
-          </span>
+          <span className="text-xs text-gray-500 dark:text-gray-400 md:text-sm">{date}</span>
         </div>
 
-        {/* Title */}
-        <h3 className="text-xl md:text-2xl font-bold text-dark dark:text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">
+        <h3 className="mb-3 line-clamp-2 text-xl font-bold text-dark transition-colors group-hover:text-primary dark:text-white md:text-2xl">
           {title}
         </h3>
 
-        {/* Excerpt */}
-        <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base leading-relaxed mb-4 line-clamp-3">
+        <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-gray-600 dark:text-gray-300 md:text-base">
           {excerpt}
         </p>
 
-        {/* Read More */}
-        <div className="flex items-center gap-2 text-primary font-semibold group-hover:gap-3 transition-all">
+        <div className="flex items-center gap-2 font-semibold text-primary transition-all group-hover:gap-3">
           <span>Read More</span>
-          <FiArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          <FiArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </motion.a>

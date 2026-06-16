@@ -107,6 +107,7 @@ const PopularCourses = ({ courses = [] }) => {
                     modules={course.modules}
                     features={course.features}
                     price={course.price}
+                    imageUrl={course.imageUrl}
                     delay={idx * 0.05}
                   />
                 </div>

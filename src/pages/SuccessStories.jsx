@@ -1,208 +1,108 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import Hero from '../components/Hero'
 import SectionTitle from '../components/SectionTitle'
-import TestimonialCard from '../components/TestimonialCard'
 import CTASection from '../components/CTASection'
+import useSiteContent from '../hooks/useSiteContent'
+import { FiAward, FiBriefcase, FiStar, FiTrendingUp, FiUsers } from 'react-icons/fi'
 
 const SuccessStories = () => {
-  const successStories = [
-    {
-      name: 'Rajesh Kumar',
-      role: 'Software Tester',
-      company: 'Tech Corp India',
-      content: 'I was struggling to find a job after my graduation. Career Catalyst Institute provided the perfect training with real-world projects. The placement support was exceptional, and I landed a job within 2 months of completing the course. The practical knowledge I gained here is directly applicable in my current role.',
-      avatar: '👨‍💼',
-      achievement: 'Software Tester at Tech Corp India'
-    },
-    {
-      name: 'Priya Sharma',
-      role: 'QA Engineer',
-      company: 'Digital Solutions Ltd',
-      content: 'The course curriculum is well-structured and the trainers are incredibly knowledgeable. I appreciated the balance between theory and practical implementation. The mock interviews prepared me well for the real interviews. I got placed in my dream company with a 40% salary hike from my previous role.',
-      avatar: '👩‍💼',
-      achievement: 'QA Engineer at Digital Solutions Ltd'
-    },
-    {
-      name: 'Amit Patel',
-      role: 'Automation Tester',
-      company: 'Innovation Labs',
-      content: 'Transitioning from a non-tech background to QA testing seemed challenging, but the institute made it possible. The personalized mentoring and project-based learning helped me build confidence. Now I am working as an Automation Tester and earning 50% more than before. Great experience!',
-      avatar: '👨‍💻',
-      achievement: 'Automation Tester at Innovation Labs'
-    },
-    {
-      name: 'Sneha Desai',
-      role: 'Test Engineer',
-      company: 'Cloud Tech Solutions',
-      content: 'Excellent program with a focus on practical skills. The trainers have real-world experience which adds tremendous value to the learning. The placement cell was very supportive and helped me with resume building and interview preparation. I am now working as a Test Engineer with excellent career prospects.',
-      avatar: '👩‍🔬',
-      achievement: 'Test Engineer at Cloud Tech Solutions'
-    },
-    {
-      name: 'Vikram Singh',
-      role: 'Senior QA Analyst',
-      company: 'Enterprise Solutions',
-      content: 'After 2 years of experience in manual testing, I wanted to transition to automation and senior roles. This institute provided exactly what I needed - advanced automation skills and career advancement strategies. I got promoted and now lead a team of QA engineers. Highly grateful!',
-      avatar: '👨‍🏫',
-      achievement: 'Senior QA Analyst at Enterprise Solutions'
-    },
-    {
-      name: 'Neha Gupta',
-      role: 'QA Analyst',
-      company: 'Fintech Corp',
-      content: 'Perfect bridge program for career changers. I was working in a different field and wanted to enter IT. The instructors were patient and helpful. The real-world projects gave me portfolio pieces that impressed the hiring managers. Now I am working with a leading fintech company with great learning opportunities.',
-      avatar: '👩‍💻',
-      achievement: 'QA Analyst at Fintech Corp'
-    },
-    {
-      name: 'Abhishek Sinha',
-      role: 'Selenium Automation Expert',
-      company: 'Tech Innovations',
-      content: 'The Selenium and automation testing modules were comprehensive and well-designed. The trainers provided one-on-one support when I struggled with certain concepts. The career guidance helped me apply to the right companies. I now specialize in automation testing and love my job.',
-      avatar: '💻',
-      achievement: 'Selenium Automation Expert at Tech Innovations'
-    },
-    {
-      name: 'Meera Kapoor',
-      role: 'QA Engineer',
-      company: 'Global IT Services',
-      content: 'Coming from a non-IT background, I was nervous about joining the tech industry. The institute\'s supportive environment and expert mentors made all the difference. I gained not just technical skills but also confidence. Now I am successfully working as a QA Engineer at a reputed IT services company.',
-      avatar: '👩‍💼',
-      achievement: 'QA Engineer at Global IT Services'
-    }
-  ]
-
+  const { content } = useSiteContent()
+  const stories = content.successStories || []
   const statistics = [
-    { icon: '👥', number: '500+', label: 'Students Trained' },
-    { icon: '🎓', number: '450+', label: 'Successfully Placed' },
-    { icon: '⭐', number: '4.9/5', label: 'Average Rating' },
-    { icon: '💼', number: '100+', label: 'Partner Companies' }
+    { number: '500+', label: 'Students Guided', icon: FiUsers },
+    { number: '4.9/5', label: 'Average Rating', icon: FiStar },
+    { number: '100+', label: 'Hiring Targets', icon: FiBriefcase },
+    { number: 'Career', label: 'Growth Focus', icon: FiTrendingUp },
   ]
 
   return (
-    <div>
-      {/* Hero Section */}
-      <Hero
-        title="Student Success Stories"
-        subtitle="Real stories of professionals who transformed their careers with Career Catalyst Institute"
-        image="🏆"
-        buttons={[
-          { label: 'Share Your Story', href: '/contact', type: 'primary' },
-          { label: 'Join Now', href: '/course', type: 'secondary' }
-        ]}
-      />
+    <div className="bg-white dark:bg-gray-900">
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-primary">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(20,184,166,0.24),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.22),transparent_30%)]" />
+        <div className="container-custom relative z-10 grid min-h-[calc(100vh-5rem)] grid-cols-1 items-center gap-10 py-16 md:grid-cols-2 md:py-24">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-teal-100 backdrop-blur">
+              <FiAward className="h-4 w-4" />
+              Alumni outcomes
+            </span>
+            <h1 className="mt-6 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+              Student Success Stories
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-8 text-slate-200 md:text-lg">
+              Real learner journeys showing how practical training, mentoring, and career preparation can create a stronger QA career path.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link to="/contact" className="rounded-lg bg-white px-6 py-3 text-center font-bold text-primary shadow-xl transition-all hover:-translate-y-0.5">Share Your Story</Link>
+              <Link to="/course" className="rounded-lg border border-white/30 px-6 py-3 text-center font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-white/10">Join Next Batch</Link>
+            </div>
+          </motion.div>
 
-      {/* Statistics */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-primary to-accent">
-        <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
-            {statistics.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                className="text-white"
-              >
-                <p className="text-3xl md:text-4xl font-bold mb-2">{stat.number}</p>
-                <p className="text-sm md:text-base opacity-90">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.15, duration: 0.6 }}>
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&h=720&fit=crop" alt="Successful students and mentors" className="h-[360px] w-full rounded-3xl object-cover shadow-2xl md:h-[520px]" />
+          </motion.div>
         </div>
       </section>
 
-      {/* Success Stories */}
-      <section className="py-16 md:py-24 bg-white dark:bg-gray-900">
-        <div className="container-custom">
-          <SectionTitle
-            title="Meet Our Successful Alumni"
-            subtitle="Stories of transformation and career growth"
-          />
+      <section className="bg-gradient-to-r from-primary to-accent py-12 md:py-16">
+        <div className="container-custom grid grid-cols-2 gap-6 text-center md:grid-cols-4">
+          {statistics.map((stat, index) => {
+            const Icon = stat.icon
+            return (
+              <motion.div key={stat.label} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: index * 0.08 }} className="text-white">
+                <Icon className="mx-auto mb-3 h-7 w-7" />
+                <p className="text-3xl font-black md:text-4xl">{stat.number}</p>
+                <p className="mt-1 text-sm opacity-90 md:text-base">{stat.label}</p>
+              </motion.div>
+            )
+          })}
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {successStories.map((story, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                className="p-6 md:p-8 rounded-2xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all border border-gray-200 dark:border-gray-700"
-              >
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-14 h-14 bg-gradient-primary rounded-full flex items-center justify-center text-white text-2xl flex-shrink-0">
-                    {story.avatar}
+      <section className="py-20 md:py-28">
+        <div className="container-custom">
+          <SectionTitle title="Meet Our Successful Alumni" subtitle="These story cards are fully editable from the admin dashboard." />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {stories.map((story, index) => (
+              <motion.div key={`${story.name}-${index}`} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }} className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                {story.imageUrl && <img src={story.imageUrl} alt={story.name} className="h-56 w-full object-cover" loading="lazy" />}
+                <div className="p-6 md:p-8">
+                  <div className="mb-4 flex items-start gap-4">
+                    <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-primary text-lg font-black text-white">
+                      {(story.name || 'S').slice(0, 2).toUpperCase()}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-dark dark:text-white">{story.name}</h3>
+                      <p className="text-sm font-semibold text-accent">{story.achievement || `${story.role} at ${story.company}`}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-dark dark:text-white">{story.name}</h3>
-                    <p className="text-sm text-accent font-medium">{story.achievement}</p>
-                  </div>
+                  <p className="leading-7 text-gray-600 dark:text-gray-300">{story.content}</p>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed italic">
-                  "{story.content}"
-                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Impact */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-blue-50 to-teal-50 dark:from-gray-800 dark:to-gray-900">
+      <section className="bg-slate-50 py-20 dark:bg-gray-800/60 md:py-28">
         <div className="container-custom">
-          <SectionTitle
-            title="Our Impact"
-            subtitle="The difference we make in students' lives"
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0 }}
-              className="p-6 md:p-8 rounded-2xl bg-white dark:bg-gray-800 shadow-lg text-center"
-            >
-              <div className="text-5xl mb-4">📈</div>
-              <h3 className="text-2xl font-bold gradient-text mb-3">Avg Salary Growth</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-lg font-semibold">45% Increase</p>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">On average within first year</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="p-6 md:p-8 rounded-2xl bg-white dark:bg-gray-800 shadow-lg text-center"
-            >
-              <div className="text-5xl mb-4">⏱️</div>
-              <h3 className="text-2xl font-bold gradient-text mb-3">Avg Time to Job</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-lg font-semibold">3-4 Months</p>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">After course completion</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="p-6 md:p-8 rounded-2xl bg-white dark:bg-gray-800 shadow-lg text-center"
-            >
-              <div className="text-5xl mb-4">😊</div>
-              <h3 className="text-2xl font-bold gradient-text mb-3">Student Satisfaction</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-lg font-semibold">94% Satisfied</p>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">Based on feedback surveys</p>
-            </motion.div>
+          <SectionTitle title="Our Impact" subtitle="Professional learning support designed around measurable career progress." />
+          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
+            {[
+              ['Practical Skills', 'Hands-on assignments and projects'],
+              ['Career Readiness', 'Resume, LinkedIn, and interviews'],
+              ['Confidence', 'Mentor feedback and guided practice'],
+            ].map(([title, text], index) => (
+              <motion.div key={title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }} className="rounded-2xl bg-white p-7 text-center shadow-md dark:bg-gray-800">
+                <h3 className="text-2xl font-bold gradient-text">{title}</h3>
+                <p className="mt-3 text-gray-600 dark:text-gray-300">{text}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <CTASection
-        title="Ready to Write Your Success Story?"
-        subtitle="Join our next batch and transform your career in Software Testing"
-        buttonText="Enroll Now"
-        buttonHref="/contact"
-      />
+      <CTASection title="Ready To Write Your Success Story?" subtitle="Join our next batch and build practical QA career skills." buttonText="Enroll Now" buttonHref="/contact" />
     </div>
   )
 }
